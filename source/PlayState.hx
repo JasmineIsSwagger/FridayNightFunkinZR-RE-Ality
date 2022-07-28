@@ -58,6 +58,7 @@ import Achievements;
 import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
+import Shaders.PulseEffect;
 import Conductor.Rating;
 #if sys
 import sys.FileSystem;
@@ -131,6 +132,8 @@ class PlayState extends MusicBeatState
 	public static var storyDifficulty:Int = 1;
 
 	public var spawnTime:Float = 2000;
+	
+	public static var screenshader:Shaders.PulseEffect = new PulseEffect();
 
 	public var vocals:FlxSound;
 
@@ -354,6 +357,11 @@ class PlayState extends MusicBeatState
 		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
+		
+		screenshader.waveAmplitude = 1;
+		screenshader.waveFrequency = 2;
+		screenshader.waveSpeed = 1;
+		screenshader.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000, 100000);
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
