@@ -43,7 +43,9 @@ import openfl.Lib;
 import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.BitmapFilter;
+import openfl.filters.ShaderFilter;
 import openfl.utils.Assets as OpenFlAssets;
+import ChromaticAberration;
 import editors.ChartingState;
 import editors.CharacterEditorState;
 import flixel.group.FlxSpriteGroup;
@@ -235,6 +237,9 @@ class PlayState extends MusicBeatState
 	var grpLimoParticles:FlxTypedGroup<BGSprite>;
 	var grpLimoDancers:FlxTypedGroup<BackgroundDancer>;
 	var fastCar:BGSprite;
+        var ChromeAberration:ChromaticAberration;
+        var shaders:Bool = false;
+        var Chroma:Float = 0.005;
 
 	var upperBoppers:BGSprite;
 	var bottomBoppers:BGSprite;
@@ -511,6 +516,20 @@ class PlayState extends MusicBeatState
 					add(stageCurtains);
 				}
 				dadbattleSmokes = new FlxSpriteGroup(); //troll'd
+
+			case 'ShaderStageTest':
+			{
+				var bg:BGSprite = new BGSprite('cheater', -600, -200, 0.9, 0.9);
+				add(bg);
+				bg.active = true;
+
+				var testshader:Shaders.GlitchEffect = new Shaders.GlitchEffect();
+				testshader.waveAmplitude = 0.1;
+				testshader.waveFrequency = 5;
+				testshader.waveSpeed = 2;
+				bg.shader = testshader.shader;
+				curbg = bg;
+			}
 
 			case 'spooky': //Week 2
 				if(!ClientPrefs.lowQuality) {
@@ -980,7 +999,15 @@ class PlayState extends MusicBeatState
 				var evilTrail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069); //nice
 				addBehindDad(evilTrail);
 		}
+              switch (songName)
+              {
+                  case 'Test':
+                      shaders = true;
+                      ChromeAberration = new ChromaticAberration();
+                      camGame.setFilters([new ShaderFilter(ChromeAberration)]);
+                      camHUD.setFilters([new ShaderFilter(ChromeAberration)]);
 
+              }
 		var file:String = Paths.json(songName + '/dialogue'); //Checks for json/Psych Engine dialogue
 		if (OpenFlAssets.exists(file)) {
 			dialogueJson = DialogueBoxPsych.parseDialogue(file);
@@ -4866,22 +4893,24 @@ class PlayState extends MusicBeatState
 			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 		}
 
-		iconP1.scale.set(1.2, 1.2);
-		iconP2.scale.set(1.2, 1.2);
+		var funny:Float = (healthBar.percent * 0.01) + 0.01;
+		//icon squish funny haha
+		iconP1.setGraphicSize(Std.int(iconP1.width + (50 * (2 - funny))),Std.int(iconP1.height - (25 * (2 - funny))));
+		iconP2.setGraphicSize(Std.int(iconP2.width + (50 * (2 - funny))),Std.int(iconP2.height - (25 * (2 - funny))));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
 
-		if (gf != null && curBeat % Math.round(gfSpeed * gf.danceEveryNumBeats) == 0 && gf.animation.curAnim != null && !gf.animation.curAnim.name.startsWith("sing") && !gf.stunned)
-		{
-			gf.dance();
-		}
-		if (curBeat % boyfriend.danceEveryNumBeats == 0 && boyfriend.animation.curAnim != null && !boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.stunned)
-		{
-			boyfriend.dance();
-		}
-		if (curBeat % dad.danceEveryNumBeats == 0 && dad.animation.curAnim != null && !dad.animation.curAnim.name.startsWith('sing') && !dad.stunned)
-		{
+		if(curBeat % 2 == 0) {
+			if (boyfriend.animation.curAnim.name != null && !boyfriend.animation.curAnim.name.startsWith("sing"))
+			{
+				boyfriend.dance();
+			}
+			if (dad.animation.curAnim.name != null && !dad.animation.curAnim.name.startsWith("sing") && !dad.stunned)
+			{
+				dad.dance();
+			}
+		} else if(dad.danceIdle && dad.animation.curAnim.name != null && !dad.curCharacter.startsWith('gf') && !dad.animation.curAnim.name.startsWith("sing") && !dad.stunned) {
 			dad.dance();
 		}
 
