@@ -528,7 +528,6 @@ class PlayState extends MusicBeatState
 				testshader.waveFrequency = 5;
 				testshader.waveSpeed = 2;
 				bg.shader = testshader.shader;
-				curStage = bg;
 			}
 
 			case 'spooky': //Week 2
