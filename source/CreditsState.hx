@@ -81,6 +81,20 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+			['The FNZR+RE Devs'],
+			['ShredboiHD',		'shredboi',		'Mod director and owner',								'https://www.youtube.com/c/ShredBoiShredEngine',	'FFD35B'],
+			['1058pixels',		'icon',		'Coder',								'NO LINK',	'FF0000'],
+			['GabDoesStuff',		'gab',		'Secondary coder',								'https://twitter.com/Gabriel2019r1',	'EB2B48'],
+			['minusclub',		'icon',		'Third coder',								'NO LINK',	'FF0000'],
+			['Crysta',		'crysta',		'Main artist for the mod itself',								'https://www.youtube.com/channel/UCSOYlOSRbPNe-Lb-AGMJniw',	'4D47FF'],
+			['Redfong',		'redfong',		'Secondary artist for the mod',								'NO LINK',	'FF0000'],
+			['meathead24',		'meat',		'Charter',								'https://www.youtube.com/channel/UCDjN9psHRxTUO124RzEL5zQ',	'FFD35B'],
+			['Josh The Pickaxe',		'pickaxe',		'Secondary Charter',								'https://youtube.com/channel/UCf8ZPLOmfTM0hfHaqroE24w',	'AFAFAF'],
+			['']
+			['Scroll down for Special Credits'],
+			['']
+			['']
+			['']
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
 			['RiverOaken',			'river',			'Main Artist/Animator of Psych Engine',							'https://twitter.com/RiverOaken',		'B42F71'],
