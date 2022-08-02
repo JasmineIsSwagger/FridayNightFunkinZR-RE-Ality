@@ -2775,14 +2775,6 @@ class PlayState extends MusicBeatState
 		{
 			iconP1.swapOldIcon();
 		}*/
-		if (curbg != null)
-		{
-				if (curbg.active)
-				{
-					var shad = cast(curbg.shader, Shaders.GlitchShader);
-					shad.uTime.value[0] += elapsed;
-				}
-		}
 		callOnLuas('onUpdate', [elapsed]);
 
 		switch (curStage)
